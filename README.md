@@ -3,4 +3,5 @@
   <img src="https://raw.githubusercontent.com/ian20040409/Lunch-webview-swift/refs/heads/main/IMG_0069_new.png" width="40%">
   
 </div>
-![image](https://raw.githubusercontent.com/ian20040409/Lunch-webview-swift/refs/heads/main/IMG_0034-landscape.png)
+
+![Funny Cat](https://example.com/funny-cat.gif)
