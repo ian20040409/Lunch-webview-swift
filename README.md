@@ -4,4 +4,4 @@
   
 </div>
 
-![Funny Cat](https://example.com/funny-cat.gif)
+![ipad](https://raw.githubusercontent.com/ian20040409/Lunch-webview-swift/refs/heads/main/IMG_0034-landscape.png)
