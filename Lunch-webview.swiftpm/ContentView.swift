@@ -34,61 +34,67 @@ struct ContentView: View {
                 }
             
             // 工具列（浮動或隱藏後顯示小按鈕）
-            if showToolbar {
-                VStack(spacing: 20) {
-                    // 重新整理按鈕
-                    Button(action: {
-                        webView.reload()
-                    }) {
-                        Image(systemName: "arrow.clockwise")
-                    }
-                    
-                    // 分享按鈕（加入長按手勢觸發 ExportView）
-                    Button(action: {
-                        showShareSheet = true
-                    }) {
-                        Image(systemName: "square.and.arrow.up")
-                            .scaleEffect(isLongPressing ? 1.3 : 1.0)
-                            .animation(.easeInOut(duration: 0.2), value: isLongPressing)
-                    }
-                    .simultaneousGesture(
-                        LongPressGesture(minimumDuration: 1.5)
-                            .onChanged { _ in
-                                withAnimation { isLongPressing = true }
+            withAnimation {
+                Group {
+                    if showToolbar {
+                        VStack(spacing: 22) {
+                            // 重新整理按鈕
+                            Button(action: {
+                                webView.reload()
+                            }) {
+                                Image(systemName: "arrow.clockwise")
                             }
-                            .onEnded { _ in
-                                isLongPressing = false
-                                showExportView = true
+                            
+                            // 分享按鈕（加入長按手勢觸發 ExportView）
+                            Button(action: {
+                                showShareSheet = true
+                            }) {
+                                Image(systemName: "square.and.arrow.up")
+                                    .scaleEffect(isLongPressing ? 1.3 : 1.0)
+                                    .animation(.easeInOut(duration: 0.2), value: isLongPressing)
                             }
-                    )
-                    
-                    // 隱藏工具列按鈕
-                    Button(action: {
-                        withAnimation { showToolbar = false }
-                    }) {
-                        Image(systemName: "eye.slash")
-                    }
-                }
-                .padding()
-                .background(.ultraThinMaterial)
-                .clipShape(Capsule())
-                .padding(.trailing, 20)
-                .padding(.bottom, 40)
-                .shadow(radius: 5)
-            } else {
-                // 工具列隱藏時顯示的小按鈕
-                Button(action: {
-                    withAnimation { showToolbar = true }
-                }) {
-                   
-                    Image(systemName: "ellipsis")
+                            .simultaneousGesture(
+                                LongPressGesture(minimumDuration: 1.5)
+                                    .onChanged { _ in
+                                        withAnimation { isLongPressing = true }
+                                    }
+                                    .onEnded { _ in
+                                        isLongPressing = false
+                                        showExportView = true
+                                    }
+                            )
+                            
+                            // 隱藏工具列按鈕
+                            Button(action: {
+                                withAnimation { showToolbar = false }
+                            }) {
+                                Image(systemName: "eye.slash")
+                            }
+                        }
                         .padding()
                         .background(.ultraThinMaterial)
-                        .clipShape(Circle())
-                        .shadow(radius: 15)
+                        .clipShape(Capsule())
+                        .padding(.trailing, 20)
+                        .padding(.bottom, 40)
+                        .shadow(radius: 5)
+                        .transition(.move(edge: .trailing).combined(with: .opacity))
+                    } else {
+                        // 工具列隱藏時顯示的小按鈕
+                        Button(action: {
+                            withAnimation { showToolbar = true }
+                        }) {
+                            Image(systemName: "ellipsis")
+                                .padding()
+                                .background(.ultraThinMaterial)
+                                .clipShape(Circle())
+                                .shadow(radius: 15)
+                        }
+                        .padding(.trailing, 20)
+                        .padding(.bottom, 40)
+                        .transition(.move(edge: .trailing).combined(with: .opacity))
+                    }
                 }
-                .padding(.trailing, 20)
-                .padding(.bottom, 40)
+                .animation(.easeInOut, value: showToolbar)
             }
         }
         .ignoresSafeArea(.all, edges: .bottom)
